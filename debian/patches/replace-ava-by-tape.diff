@@ -1,0 +1,29 @@
+Description: replace ava by tape
+Author: Xavier Guimard <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2020-10-30
+
+--- a/test.js
++++ b/test.js
+@@ -1,5 +1,5 @@
+-import test from 'ava';
+-import isPathCwd from '.';
++const test = require('tape');
++const isPathCwd = require('.');
+ 
+ const processCwd = process.cwd;
+ const cwd = process.cwd();
+@@ -14,6 +14,7 @@
+ 	process.cwd = () => cwd.toLowerCase();
+ 	t.false(isPathCwd(cwd.toUpperCase()));
+ 	process.cwd = processCwd;
++    t.end();
+ });
+ 
+ test('win32', t => {
+@@ -25,4 +26,5 @@
+ 	process.cwd = processCwd;
+ 
+ 	Object.defineProperty(process, 'platform', {value: processPlatform});
++    t.end();
+ });
